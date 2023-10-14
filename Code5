@@ -1,0 +1,87 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+
+#define MAX_SEATS 100
+#define PRICE_PER_SEAT 10
+
+
+int seats[MAX_SEATS];
+
+
+void displayAvailableSeats(int numSeats) {
+    printf("Available Seats:\n");
+    for (int i = 0; i < numSeats; i++) {
+        if (seats[i] == 0) {
+            printf("Seat %d\n", i + 1);
+        }
+    }
+}
+
+
+int calculateTotalCost(int numSeats) {
+    int totalCost = 0;
+    for (int i = 0; i < numSeats; i++) {
+        if (seats[i] == 1) {
+            totalCost += PRICE_PER_SEAT;
+        }
+    }
+    return totalCost;
+}
+
+int main() {
+    int numSeats;
+    int totalCost = 0;
+
+    printf("Welcome to the Movie Ticket Booking System!\n");
+    printf("Enter the number of available seats: ");
+    scanf("%d", &numSeats);
+
+   
+    for (int i = 0; i < numSeats; i++) {
+        seats[i] = 0;
+    }
+
+    while (1) {
+        printf("\nOptions:\n");
+        printf("1. View available seats\n");
+        printf("2. Book seats\n");
+        printf("3. Calculate total cost\n");
+        printf("4. Exit\n");
+
+        int choice;
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                displayAvailableSeats(numSeats);
+                break;
+            case 2:
+                int seatNum;
+                printf("Enter the seat number to book (1-%d): ", numSeats);
+                scanf("%d", &seatNum);
+
+                if (seatNum < 1 || seatNum > numSeats) {
+                    printf("Invalid seat number.\n");
+                } else if (seats[seatNum - 1] == 1) {
+                    printf("Seat %d is already booked.\n", seatNum);
+                } else {
+                    seats[seatNum - 1] = 1;
+                    printf("Seat %d booked successfully.\n", seatNum);
+                }
+                break;
+            case 3:
+                totalCost = calculateTotalCost(numSeats);
+                printf("Total cost: $%d\n", totalCost);
+                break;
+            case 4:
+                printf("Thank you for using the Movie Ticket Booking System!\n");
+                exit(0);
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    }
+
+    return 0;
+}
