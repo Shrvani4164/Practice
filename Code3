@@ -1,0 +1,52 @@
+#include <stdio.h>
+
+int main() {
+    int numStudents;
+
+    printf("Enter the number of students: ");
+    scanf("%d", &numStudents);
+
+    if (numStudents <= 0) {
+        printf("Please enter a valid number of students.\n");
+        return 1;  // Exit with an error code
+    }
+
+    char studentNames[100][50];  // Assuming a maximum of 100 students, each with a name of up to 50 characters
+    int studentGrades[100];
+
+    
+    for (int i = 0; i < numStudents; i++) {
+        printf("Enter the name of student %d: ", i + 1);
+        scanf("%s", studentNames[i]);
+        printf("Enter the grade for %s: ", studentNames[i]);
+        scanf("%d", &studentGrades[i]);
+    }
+
+    
+    int sum = 0;
+    int highestGrade = studentGrades[0];
+    int lowestGrade = studentGrades[0];
+
+    for (int i = 0; i < numStudents; i++) {
+        sum += studentGrades[i];
+
+        if (studentGrades[i] > highestGrade) {
+            highestGrade = studentGrades[i];
+        }
+
+        if (studentGrades[i] < lowestGrade) {
+            lowestGrade = studentGrades[i];
+        }
+    }
+
+    double average = (double)sum / numStudents;
+
+    
+    printf("\nStudent Grade Summary:\n");
+    printf("Average Grade: %.2lf\n", average);
+    printf("Highest Grade: %d\n", highestGrade);
+    printf("Lowest Grade: %d\n", lowestGrade);
+
+    return 0;
+}
+
