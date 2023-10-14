@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    char fileName[100];
+    FILE *file;
+    int wordCount = 0;
+    char ch, prevChar;
+
+    printf("Enter the file name: ");
+    scanf("%s", fileName);
+
+  
+    file = fopen(fileName, "r");
+
+    if (file == NULL) {
+        printf("File not found or cannot be opened.\n");
+        return 1;  // Exit with an error code
+    }
+
+    
+    while ((ch = fgetc(file)) != EOF) {
+        if (ch == ' ' || ch == '\n' || ch == '\t' || ch == '\r') {
+            // Check if the previous character was not a space, newline, tab, or carriage return
+            if (prevChar != ' ' && prevChar != '\n' && prevChar != '\t' && prevChar != '\r') {
+                wordCount++;
+            }
+        }
+        prevChar = ch;
+    }
+
+   
+    if (prevChar != ' ' && prevChar != '\n' && prevChar != '\t' && prevChar != '\r') {
+        wordCount++;
+    }
+
+    
+    fclose(file);
+
+    printf("Total word count in the file: %d\n", wordCount);
+
+    return 0;
+}
+
+
